@@ -1,0 +1,13 @@
+name: read-board
+on: workflow_dispatch
+permissions:
+  contents: read
+jobs:
+  read:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Read the board with the workflow token
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api graphql -f query='{ organization(login:"5G-MAG"){ projectV2(number:75){ title public items(first:10){ totalCount } } } }' || echo "READ FAILED"
